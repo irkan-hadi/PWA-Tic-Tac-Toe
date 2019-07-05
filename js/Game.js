@@ -42,7 +42,9 @@ class Game {
             var usedQ = [];
             var matching_is;
 
-            // Put all the matching values in an array
+            // I could have used some recursive Coin Change Problem algo but meh
+            
+            // Put all the matching squares magic weights in an array
             for (const sqr of this.squares) {
                 if (sqr.value === this.currentTurn) {
                     usedQ.push(sqr.magicWeight);
@@ -57,7 +59,7 @@ class Game {
                 count.splice(0, count.length);
                 // Add the weight of the first element
                 magicSum = wght_1
-                // Push it an array to keep track of the winning squares (to highlight them later)
+                // Push it to an array to keep track of the winning squares (to highlight them later)
                 count.push(wght_1);
                 masterLoop:
                 // Loop through the tagged squares to check their sums
@@ -66,10 +68,10 @@ class Game {
                     if (wght_1 != wght_2) {
                         // Sum it 
                         magicSum += wght_2;
-                        // Push it an array to keep track of the winning squares
+                        // Push it to an array to keep track of the winning squares
                         count.push(wght_2);
 
-                        // If we have 3 elements that add up to 15 then we have a winner!
+                        // If we have 3 squares that add up to 15 then we have a winner!
                         if (magicSum === 15 && count.length===3) {
 
                             this.inProgress = false;
