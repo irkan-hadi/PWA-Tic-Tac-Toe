@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="theme-color" content="#317EFB" />
+    <meta name="Description" content="Developed By: Irkan Hadi">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PWA Tic Tac Toe</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" sizes="192x192" href="icon-192x192.png">
+    <link rel="apple-touch-icon" href="icon-192x192.png">
+    <link href="css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/master.css" type="text/css" media="all">
+    <style>
+        @font-face {
+            font-family: 'fa-brands-400';
+            font-display: auto;
+            src: local('fa-brands-400'), url(/webfonts/fa-brands-400.woff2) format('woff2');
+        }
+    </style>
+</head>
+
+<body>
+    <script src="js/vue.min.js"></script>
+    <main>
+        <div id="game-view">
+            <div id="game-view-info">
+                {{infoMessage}}
+            </div>
+
+            <div class="game-board">
+                <div v-for="(square,i) in squares" v-bind:class="{highlighted: square.isHighlighted}"
+                    v-on:click="makeMove(i)" class="box">
+                    {{square.value}}
+
+
+                </div>
+
+
+            </div>
+
+
+            <div class="wrapper">
+                <button class="button" v-on:click="reinit()">Reset Game</button>
+            </div>
+
+
+        </div>
+    </main>
+    <footer>
+        <div class="footer">
+
+
+            <a href="https://twitter.com/c0derr0r" aria-label="Check the developer Twitter account"><i
+                    class="fab fa-twitter"></i></a>
+            <a href="https://github.com/irkan-hadi/PWA-Tic-Tac-Toe" aria-label="Check the source code"><i
+                    class="fab fa-github"></i></a>
+            <a href="https://om.linkedin.com/in/irkan" aria-label="Check the developer Linkedin account"><i
+                    class="fab fa-linkedin"></i></a>
+
+        </div>
+    </footer>
+    <script src="js/Game.js"></script>
+    <script src="js/Square.js"></script>
+
+    <script>
+
+        let activeGame = new Game();
+        activeGame.initGame();
+        let gameVue = new Vue({
+            el: '#game-view',
+            data: activeGame,
+            methods: {
+                reinit() {
+                    //window.location.reload()
+                    activeGame.initGame();
+
+                }
+            },
+            computed: {
+                infoMessage: function () {
+                    //var text='Magic Number is '+this.
+                    if (this.inProgress) {
+                        return 'It is ' + this.currentTurn + '\'s turn!';
+
+                    }
+                    if (this.winner) {
+                        return '🎊🎉 ' + this.winner + ' wins! 🎉🎊';
+
+                    }
+                    if (!this.winner && !this.inProgress) {
+                        return 'It is a draw!';
+
+                    }
+
+                }
+
+            }
+        });
+
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker
+                .register('/sw.js')
+                .then(function () { console.log("Service Worker Registered"); });
+        }
+    </script>
+
+</body>
+
+</html>
