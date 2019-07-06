@@ -1,6 +1,6 @@
 class Game {
     constructor() {
-      
+
 
         this.initGame = function () {
             this.inProgress = true;
@@ -23,7 +23,6 @@ class Game {
             this.squares[7].magicWeight = 3;
             this.squares[8].magicWeight = 8;
         }
-       
 
         this.makeMove = function (i) {
             if (this.inProgress && !this.squares[i].value) {
@@ -38,71 +37,41 @@ class Game {
 
         this.checkForWinner = function () {
 
-            var magicSum = 0;
-            var usedQ = [];
-            var matching_is;
+            var PlayerMoves = [];
 
-            // I could have used some recursive Coin Change Problem algo but meh
-            
-            // Put all the matching squares magic weights in an array
+            // Put all player moves magic weights in an array
             for (const sqr of this.squares) {
                 if (sqr.value === this.currentTurn) {
-                    usedQ.push(sqr.magicWeight);
-
+                    PlayerMoves.push(sqr.magicWeight);
                 }
             }
-            
-            var count = [];
+            // I could have used some recursive Coin Change Problem algo but meh
 
-
-            for (const wght_1 of usedQ) {
-                count.splice(0, count.length);
-                // Add the weight of the first element
-                magicSum = wght_1
-                // Push it to an array to keep track of the winning squares (to highlight them later)
-                count.push(wght_1);
-                masterLoop:
-                // Loop through the tagged squares to check their sums
-                for (const wght_2 of usedQ) {
-                    // Ignore if its the same square
-                    if (wght_1 != wght_2) {
-                        // Sum it 
-                        magicSum += wght_2;
-                        // Push it to an array to keep track of the winning squares
-                        count.push(wght_2);
-
-                        // If we have 3 squares that add up to 15 then we have a winner!
-                        if (magicSum === 15 && count.length===3) {
-
+            // check if any 3 distinct magic weight numbers combinations amounts to 15 (Magic Number)
+            masterLoop:
+            for (let i = 0; i < PlayerMoves.length; i++)
+                for (let x = 0; x < PlayerMoves.length && i != x; x++)
+                    for (let y = 0; y < PlayerMoves.length && x != y && i != y; y++)
+                        if (PlayerMoves[i] + PlayerMoves[x] + PlayerMoves[y] === 15) {
+                            // found a winner!
+                            for (const _sqr of this.squares)
+                                if (_sqr.magicWeight === PlayerMoves[i] ||
+                                    _sqr.magicWeight === PlayerMoves[x] ||
+                                    _sqr.magicWeight === PlayerMoves[y]) {
+                                    _sqr.isHighlighted = true;
+                                }
                             this.inProgress = false;
                             this.winner = this.currentTurn;
-                            // Highlight the winning squares
-                            for (const _sqr of this.squares) {
 
-                                _sqr.isHighlighted = count.includes(_sqr.magicWeight);
-
-                            }
-                            break masterLoop;
-                           
-
-                        }
-                        // Break if sum reached > 15 or squares are more than 3
-                        else if (magicSum > 15 || count.length > 3) {
                             break masterLoop;
 
                         }
-                    }
-                }
-            }
-           
+
             if (this.MovesMade === this.squares.length) {
                 this.inProgress = false;
             }
         };
-
-
     }
-
 }
 
 Game.O = 'O';
