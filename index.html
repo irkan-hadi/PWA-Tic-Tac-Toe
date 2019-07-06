@@ -72,23 +72,24 @@
             data: activeGame,
             methods: {
                 reinit() {
-                    //window.location.reload()
+                   
                     activeGame.initGame();
 
                 }
             },
             computed: {
                 infoMessage: function () {
-                    //var text='Magic Number is '+this.
+                
                     if (this.inProgress) {
                         return 'It is ' + this.currentTurn + '\'s turn!';
 
                     }
-                    if (this.winner) {
+                    else if (this.winner) {
+                     
                         return '🎊🎉 ' + this.winner + ' wins! 🎉🎊';
 
                     }
-                    if (!this.winner && !this.inProgress) {
+                    else if (!this.winner && !this.inProgress) {
                         return 'It is a draw!';
 
                     }
@@ -104,6 +105,7 @@
                 .register('/sw.js')
                 .then(function () { console.log("Service Worker Registered"); });
         }
+
     </script>
 
 </body>
