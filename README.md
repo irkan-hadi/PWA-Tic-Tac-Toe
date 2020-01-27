@@ -1,5 +1,5 @@
 # PWA-Tic-Tac-Toe
-A Progressive Web App (PWA) Tic Tac Toe game made with HTML, JavaScript, CSS and a little bit of Vue.
+A Progressive Web App (PWA) fun Tic Tac Toe game made with HTML, JavaScript, CSS and a little bit of Vue.
 
 # Why is this Tic Tac Toe special?
 - It is a Progressive Web App (PWA). It can be "installed" on your mobile device and accessed offline without the need to connect to the internet.   
